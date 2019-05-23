@@ -7,21 +7,24 @@
 //
 
 import UIKit
+import CoreData
 
 class TodoListViewController: UITableViewController {
     
     let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
     
     var itemArray = [Item]()
-    
-    let defaults = UserDefaults.standard
+
+    // truy cập vào func saveContext trong AppDelegate.swift
+    let context = (UIApplication.shared.delegate as! AppDelegate ).persistentContainer.viewContext
     
 
    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask ))
+        
             loadItem()
         
     }
@@ -42,11 +45,6 @@ class TodoListViewController: UITableViewController {
 
         (itemArray[indexPath.row].done == true) ? (cell.accessoryType = .checkmark) : (cell.accessoryType = .none)
         
-//        if itemArray[indexPath.row].done == true {
-//            cell.accessoryType = .checkmark
-//        }else {
-//             cell.accessoryType = .none
-//        }
         
         return cell
     }
@@ -54,47 +52,37 @@ class TodoListViewController: UITableViewController {
     // MARK: - TableView Delegate methods
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+
+//        context.delete(itemArray[indexPath.row])
+//        itemArray.remove(at: indexPath.row)
+  
         itemArray[indexPath.row].done = !itemArray[indexPath.row].done
         
         saveItem()
         
-//        if itemArray[indexPath.row].done == false {
-//            itemArray[indexPath.row].done =  true
-//        }else {
-//             itemArray[indexPath.row].done =  false
-//        }
-
-        
         tableView.deselectRow(at: indexPath, animated: true)
-//        if  tableView.cellForRow(at: indexPath)?.accessoryType == .checkmark{
-//            tableView.cellForRow(at: indexPath)?.accessoryType = .none
-//        } else {
-//            tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-//        }
        
     }
     
     // MARK: - Add new Items
     
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
+        
          var itemTextField = UITextField()
-         let newItem = Item()
         
         let alert = UIAlertController(title: "Creat Item", message: "", preferredStyle: .alert)
         
         let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
         
+
+            
+            let newItem = Item(context: self.context)
+            
             newItem.title = itemTextField.text!
+            newItem.done = false
             self.itemArray.append(newItem)
             
             self.saveItem()
-            
-//            self.defaults.set(self.itemArray, forKey: "todoListArray")
-            
-
-            
-          
             
             
         }
@@ -103,8 +91,7 @@ class TodoListViewController: UITableViewController {
         alert.addTextField { (alertTextField) in
             alertTextField.placeholder = "Add New Item Todo"
             itemTextField = alertTextField
-            
-            
+
         }
         
         present(alert, animated: true, completion: nil)
@@ -115,28 +102,26 @@ class TodoListViewController: UITableViewController {
     
     func saveItem(){
         
-        let encoder = PropertyListEncoder()
-        
         do {
-            let data = try encoder.encode(itemArray)
-            try data.write(to:dataFilePath!)
+            
+            try context.save()
         }
         catch {
-            print(error)
+            
+            print("Error saving context\(error)")
+
         }
       self.tableView.reloadData()
     }
     
     func loadItem () {
-        if let data = try? Data(contentsOf: dataFilePath!){
-            let decoder = PropertyListDecoder()
+        let request : NSFetchRequest<Item> = Item.fetchRequest()
+
             do {
-                itemArray = try decoder.decode([Item].self, from: data)
+               itemArray = try context.fetch(request)
             }catch {
-                print(error)
+                print("Load Item error \(error)")
             }
         }
 
     }
-
-}
