@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A90E62582298488400AC421C /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90E62572298488400AC421C /* CategoryViewController.swift */; };
 		A9B430842292E14A00DAD1DA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B430832292E14A00DAD1DA /* AppDelegate.swift */; };
 		A9B430892292E14A00DAD1DA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9B430872292E14A00DAD1DA /* Main.storyboard */; };
 		A9B4308C2292E14A00DAD1DA /* Todoey.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A9B4308A2292E14A00DAD1DA /* Todoey.xcdatamodeld */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A90E62572298488400AC421C /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
 		A9B430802292E14A00DAD1DA /* Todoey.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Todoey.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9B430832292E14A00DAD1DA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A9B430882292E14A00DAD1DA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -68,6 +70,7 @@
 			isa = PBXGroup;
 			children = (
 				A9B430982292E2BE00DAD1DA /* TodoListViewController.swift */,
+				A90E62572298488400AC421C /* CategoryViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -158,6 +161,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A90E62582298488400AC421C /* CategoryViewController.swift in Sources */,
 				A9B430992292E2BE00DAD1DA /* TodoListViewController.swift in Sources */,
 				A9B430842292E14A00DAD1DA /* AppDelegate.swift in Sources */,
 				A9B4308C2292E14A00DAD1DA /* Todoey.xcdatamodeld in Sources */,
